@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interaction</title>
+</head>
+<body>
+
+    <canvas id="glcanvas" width="512" height="512"></canvas>
+
+    <div>
+        <button id = "DirectionButton">
+            Change Rotation Direction
+        </button>
+    </div>
+
+    <div>
+        <button id="StopRotation">
+            START/STOP
+        </button>
+    </div>
+    
+    <div>
+        <label for="color">Change Color</label>
+        <input type="color" id="color_change" value="#008080">
+    </div>
+
+    <div>
+        You can arrange the speed using that bar. <input id = "slide" type="range" min ="0" max="1000" step="100" value = "500" />
+    </div>
+
+    <div>
+        You can change the size of the letters using mouse wheel.
+    </div>
+
+    <div>
+        Use 'W','A','S','D' to move the letters.
+    </div>
+
+</body>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+    attribute vec4 vPosition;
+    uniform float theta;
+    uniform float scaling;
+    uniform vec2 translate;
+    void main(){
+        gl_Position.x = scaling * (cos(theta) * vPosition.x - sin(theta) * vPosition.y);
+        gl_Position.y = scaling * (sin(theta) * vPosition.x + cos(theta) * vPosition.y);
+        gl_Position.z = 0.0;
+        gl_Position.w = 1.0;
+        gl_Position.x += translate[0];
+        gl_Position.y += translate[1];
+      
+    }   
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+    precision mediump float;
+    uniform vec3 color;
+    void main(){
+        gl_FragColor = vec4(color,1);
+    } 
+</script>
+
+<script src="../common/MV.js"></script>
+<script src="../common/initShaders.js"></script>
+<script src="interaction.js"></script>
+<script src="../common/webgl-utils.js"></script>
+
+</html>
